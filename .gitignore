@@ -10,4 +10,4 @@ target/
 dist/
 *.tmp
 .idea
-.eclips
+.eclipse

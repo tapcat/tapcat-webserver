@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import persona.BrowserIdAuthenticationProvider
 import persona.BrowserIdProcessingFilter
+import persona.BrowserIdVerifier
 
 @EnableWebSecurity
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,10 +25,15 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public def authFilter() {
         def filter = new BrowserIdProcessingFilter('/login')
-        filter.verificationServiceUrl = 'https://browserid.org/verify'
+        filter.verifier = personaVerifier()
         def authManager = new ProviderManager([new BrowserIdAuthenticationProvider()])
         filter.setAuthenticationManager(authManager)
         filter
+    }
+
+    @Bean
+    public BrowserIdVerifier personaVerifier() {
+        new BrowserIdVerifier('https://browserid.org/verify', httpFactory())
     }
 
     @Bean

@@ -1,6 +1,13 @@
 *.class
 
 # Package Files #
+*.log
 *.jar
 *.war
 *.ear
+*.iml
+target/
+dist/
+*.tmp
+.idea
+.eclips

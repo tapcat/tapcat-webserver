@@ -27,7 +27,7 @@ class BrowserIdAuthenticationToken extends AbstractAuthenticationToken implement
 
     @Override
     public Object getPrincipal() {
-        return auth != null ? auth.getEmail() : null
+        return auth?.getEmail()
     }
 
     public BrowserIdResponse getVerificationResponse(){

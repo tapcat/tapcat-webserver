@@ -3,6 +3,7 @@ import org.apache.commons.httpclient.HttpClient
 import org.apache.commons.httpclient.HttpConnectionManager
 import org.apache.commons.httpclient.HttpException
 import org.apache.commons.httpclient.methods.PostMethod
+import org.codehaus.jackson.map.ObjectMapper
 import org.json.JSONException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -13,6 +14,8 @@ class BrowserIdVerifier  {
     private static String DEFAULT_VERIFY_URL = 'https://browserid.org/verify'
 
     private String url = DEFAULT_VERIFY_URL
+
+    private ObjectMapper mapper
 
     @Autowired
     private HttpConnectionManager connectionManager
@@ -43,10 +46,10 @@ class BrowserIdVerifier  {
 
         try{
             int statusCode = client.executeMethod(post)
-            if(isHttpResponseOK(statusCode)){
-                return new BrowserIdResponse(post.getResponseBodyAsString())
+            if(!isHttpResponseOK(statusCode)) {
+                throw new HttpException('http request error to host: ' + url)
             }
-            else throw new HttpException('http request error to host: ' + url)
+            mapper.readValue(post.getResponseBodyAsString(), BrowserIdResponse)
         }
         finally {
             post.releaseConnection()
@@ -54,8 +57,13 @@ class BrowserIdVerifier  {
 
     }
 
-    private static boolean isHttpResponseOK(int statusCode){
-        return statusCode >= 200 && statusCode < 300
+    private static boolean isHttpResponseOK(int statusCode) {
+        statusCode >= 200 && statusCode < 300
+    }
+
+    @Autowired
+    void setMapper(ObjectMapper mapper) {
+        this.mapper = mapper
     }
 
 

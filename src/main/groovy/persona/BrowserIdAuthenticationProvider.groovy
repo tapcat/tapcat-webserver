@@ -12,12 +12,8 @@ class BrowserIdAuthenticationProvider implements InitializingBean, Authenticatio
 
     private String verificationServiceUrl = 'https://browserid.org/verify'
 
-    public BrowserIdAuthenticationProvider(){
-
-    }
-
     @Override
-    void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception {
     }
 
     @Override
@@ -26,7 +22,7 @@ class BrowserIdAuthenticationProvider implements InitializingBean, Authenticatio
 
         BrowserIdResponse response = browserIdAuth.getVerificationResponse()
 
-        if(response.getStatus() == BrowserIdResponse.BrowserIdResponseStatus.OK ){
+        if(response.getStatus() == 'OK' ){
             String identity = response.getEmail()
             GrantedAuthority[] grantedAuthorities = ['USER']
             if(grantedAuthorities.length == 0) {

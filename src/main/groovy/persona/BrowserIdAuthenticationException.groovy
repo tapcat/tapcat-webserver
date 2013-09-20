@@ -12,6 +12,4 @@ class BrowserIdAuthenticationException extends AuthenticationException {
         super(msg, t)
     }
 
-    private static final long serialVersionUID = 1L
-
 }

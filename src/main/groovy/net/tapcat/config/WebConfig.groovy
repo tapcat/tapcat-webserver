@@ -1,19 +1,15 @@
 package net.tapcat.config
 
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
-/**
- * If you see it, than I've forgotten javadoc
- *
- * @author Denis Golovachev
- * @author $Author$ (current maintainer)
- * @since 1.0
- */
+
 @Configuration
 @EnableWebMvc
+@ComponentScan(basePackages = ['net.tapcat.advert'])
 class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override

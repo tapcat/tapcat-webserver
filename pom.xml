@@ -252,6 +252,7 @@
 
 	<build>
         <sourceDirectory>src/main/groovy</sourceDirectory>
+        <testSourceDirectory>src/main/groovy</testSourceDirectory>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
@@ -315,6 +316,7 @@
                     <webApp>
                         <contextPath>/${project.artifactId}</contextPath>
                     </webApp>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
                 </configuration>
             </plugin>
 		</plugins>

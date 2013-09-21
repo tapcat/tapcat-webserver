@@ -20,6 +20,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeUrls()
                 .antMatchers('/assets/**').permitAll()
                 .anyRequest().hasAuthority('USER')
+                .and()
+                .logout().logoutUrl('/logout')
     }
 
     @Bean

@@ -1,3 +1,8 @@
 language: java
 jdk:
   - oraclejdk7
+
+script: "mvn package"
+
+after_success:
+  - scp target/tapcat-webserver.war 146.185.140.77:/home/tapcat/

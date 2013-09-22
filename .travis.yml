@@ -14,6 +14,7 @@ after_success:
 # encrypt -> openssl aes-256-cbc -k "pwd" -in id_rsa -out id_rsa.enc -a
 # decrypt -> openssl aes-256-cbc -k "pwd" -in deploy_key.enc -d -a -out id_rsa
   - openssl aes-256-cbc -k $PASSWORD -in deploy_key.enc -d -a -out id_rsa
+  - ssh-add -D
   - chmod 600 id_rsa
   - ssh-add id_rsa
 # scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@somehost.net:/home/tapcat/

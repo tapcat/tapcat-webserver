@@ -11,12 +11,12 @@ class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return [WebSecurityConfig.class ];
+        return [WebSecurityConfig.class, JsonConfig.class ];
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return [net.tapcat.config.WebConfig.class, net.tapcat.config.WebSocketConfig.class];
+        return [WebConfig.class, WebSocketConfig.class];
     }
 
     @Override

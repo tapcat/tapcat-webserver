@@ -5,8 +5,10 @@ jdk:
 script: "mvn package"
 
 after_success:
+# password="pwd"
+  - secure: "L8GLJKivjpIoKJZtkxy4gjVXrNOpC1hKfpP38UBwPMX6CW03lZ/aGp3um1KQ3ZUTbRQZTXP0J8Ya6XsS/UIbf8ROSg3uX96IUUKiU3CLDyaGee6UtvZFcmCYBZ65QhXmPOfYLM5uswy76941iLSKrNyJs+tJJ8K8+GLAiR+syko="
 # encrypt -> openssl aes-256-cbc -k "pwd" -in id_rsa -out id_rsa.enc -a
 # decrypt -> openssl aes-256-cbc -k "pwd" -in deploy_key.enc -d -a -out id_rsa
-  - secure: "ajKKG59nysEb5rSwBbIq7hOApVEucblqppy+nYKAJeOCvEuloIPdhZs2JKWm97chVLSNZnTBwI26k24p5nZvzWefiNJwd9Gi6K6WSPJpWbL/oLioWFk2u9yb30nM1uJoAR+a6H4y7TKYVcATlM2++J4BDu9ecC/3Hru58+LJReE="
+  - openssl aes-256-cbc -k "$password" -in deploy_key.enc -d -a -out id_rsa
 # scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@somehost.net:/home/tapcat/
-  - secure: "EzIlOIdRMEetjLXdRmQukP2tuL6MY8r7B7nes/xDd0q+mX3o8eLXU/EvpCDK+Zk1nTZTOGNBvOhYeq12jALI99vRb32VwsyUwwP2n26NZ8itZuV//IIta7o7yzHJytJGHYhFZUx0WXCdPjp9Dxa9MsJJApXlpbvNJ8L0hudmkkk="
+  - scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@api.tapcat.net:/home/tapcat/

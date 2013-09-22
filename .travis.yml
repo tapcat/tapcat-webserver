@@ -5,4 +5,4 @@ jdk:
 script: "mvn package"
 
 after_success:
-  - scp -o StrictHostKeyChecking=no target/tapcat-webserver.war 146.185.140.77:/home/tapcat/
+  - secure: "OvpdDxez8CCNdUtdWwOaz9F194OM1ZCMMe2W3wyECtyYGxu+FFdIg1GLfMAOUi7M+AZmi6el7kVlyB6SWLEBy7khguY2t9R1X04MGFRnZ4VAX6oYpw8lEkxx3gWiVvOsuxRzzkgUREMTBvIydtz57SPk99O7cfrcMBxtKx6Smd0="

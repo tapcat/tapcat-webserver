@@ -8,17 +8,13 @@ env:
     - secure: "Lh1yyRQrAQy9EeNVN81vi7jDYsAszB6Sjfo+T1am2p3M82t0H6n27XhA0G7QdAw/bwefLtw9zl/Q2esM12fJeBghsZBrYb
     /vhylClpoQksmsQzNeiwWlQ8oVvHHtzMkc59NT2ZotRKjNswgTvEmHMCH/Pjrn7nwYFG26MkN4JxY="
 
-before_install:
-  # encrypt -> openssl aes-256-cbc -k "pwd" -in id_rsa -out id_rsa.enc -a
-  # decrypt -> openssl aes-256-cbc -k "pwd" -in deploy_key.enc -d -a -out id_rsa
-    - openssl aes-256-cbc -k $PASSWORD -in deploy_key.enc -d -a -out id_rsa
-    - ssh-add -D
-    - chmod 600 id_rsa
-    - ssh-add id_rsa
-
 script: "mvn package"
 
 after_success:
+# encrypt -> openssl aes-256-cbc -k "pwd" -in id_rsa -out id_rsa.enc -a
+# decrypt -> openssl aes-256-cbc -k "pwd" -in deploy_key.enc -d -a -out id_rsa
+  - openssl aes-256-cbc -k $PASSWORD -in deploy_key.enc -d -a -out id_rsa
+  - chmod 600 id_rsa
 # scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@somehost.net:/home/tapcat/
-  - scp -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@api.tapcat.net:/home/tapcat/
-  - ssh tapcat@api.tapcat.net:/home/tapcat 'zsh trigger-deploy-webserver.zsh'
+  - scp -i id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@api.tapcat.net:/home/tapcat/
+  - ssh -i id_rsa tapcat@api.tapcat.net:/home/tapcat 'zsh trigger-deploy-webserver.zsh'

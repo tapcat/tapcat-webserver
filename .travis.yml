@@ -17,4 +17,4 @@ after_success:
   - chmod 600 id_rsa
 # scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@somehost.net:/home/tapcat/
   - scp -i id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@api.tapcat.net:/home/tapcat/war/
-  - ssh -i id_rsa tapcat@api.tapcat.net 'zsh trigger-deploy-webserver.zsh'
+  - ssh -i id_rsa tapcat@api.tapcat.net 'zsh cd tapcat-deploy; git pull; ./deploy-webserver.zsh'

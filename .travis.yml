@@ -16,5 +16,5 @@ after_success:
   - openssl aes-256-cbc -k $PASSWORD -in deploy_key.enc -d -a -out id_rsa
   - chmod 600 id_rsa
 # scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@somehost.net:/home/tapcat/
-  - scp -i id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war travis@api.tapcat.net:/home/travis/
-  - ssh -i id_rsa travis@api.tapcat.net 'zsh trigger-deploy-webserver.zsh'
+  - scp -i id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@api.tapcat.net:/home/tapcat/war/
+  - ssh -i id_rsa tapcat@api.tapcat.net 'zsh trigger-deploy-webserver.zsh'

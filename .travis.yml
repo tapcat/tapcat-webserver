@@ -5,8 +5,7 @@ jdk:
 env:
   global:
     # PASSWORD=pwd
-    - secure: "Lh1yyRQrAQy9EeNVN81vi7jDYsAszB6Sjfo+T1am2p3M82t0H6n27XhA0G7QdAw/bwefLtw9zl/Q2esM12fJeBghsZBrYb
-    /vhylClpoQksmsQzNeiwWlQ8oVvHHtzMkc59NT2ZotRKjNswgTvEmHMCH/Pjrn7nwYFG26MkN4JxY="
+    secure: "PHqSWHyJolGphXMAiUJ3QNUzAUMC80tlWwVQcdV+myfC0Ovi3naKoty7KfKl2KtGamLKjwCBc8ujRm2ayoL6KM1hGLmp1IUc80uzI8h4QLrx7ky8TYvmXvw/hF9euMCXfkfQLXWzSDRSJuwnhy7szoIGmuf5sxmnNRSM6mR5+WM="
 
 script: "mvn package"
 

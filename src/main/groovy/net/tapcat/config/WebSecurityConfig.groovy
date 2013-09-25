@@ -25,7 +25,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .addFilterAfter(browserIdFilter, UsernamePasswordAuthenticationFilter.class)
-                .and()
                 .anonymous().disable()
                 .authorizeUrls()
                 .anyRequest().hasAuthority('USER')

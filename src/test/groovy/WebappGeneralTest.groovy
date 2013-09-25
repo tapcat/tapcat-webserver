@@ -32,13 +32,13 @@ class WebappGeneralTest extends Specification {
     public void 'to root should be forbidden'() {
         expect:
         mockMvc.perform(get("/"))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
     }
 
     public void 'unauthorized request to user controller should be unauthorised'() {
         expect:
         mockMvc.perform(get("/user"))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
     }
 
 }

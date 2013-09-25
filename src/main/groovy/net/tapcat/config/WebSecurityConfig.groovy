@@ -25,7 +25,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .addFilterAfter(browserIdFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(new Http401UnauthorizedEntryPoint())
                 .and()
                 .anonymous().disable()
                 .authorizeUrls()

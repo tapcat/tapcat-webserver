@@ -7,13 +7,11 @@ env:
     # PASSWORD=pwd
     secure: "JSaIWsygN9CZwEiw1WDPxf1VKQKlt9J94XNNX8gZnyUd1hJuwORJxq6ehy6nxWQST+tN24Gr17LMRU1r1EunZj4zrLcPavwXnnEmFBgprl95Tx3LGMZYLA6FLX+LeV7CbWfRad4crl5heyf+ZLc6rgesUJEIbIRHDUkHNHn7lpE="
 
-script: "mvn package"
-
 after_success:
 # encrypt -> openssl aes-256-cbc -k "pwd" -in id_rsa -out id_rsa.enc -a
 # decrypt -> openssl aes-256-cbc -k "pwd" -in deploy_key.enc -d -a -out id_rsa
   - openssl aes-256-cbc -k $PASSWORD -in deploy_key.enc -d -a -out id_rsa
   - chmod 600 id_rsa
-# scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@somehost.net:/home/tapcat/
-  - scp -P 222 -i id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.war tapcat@api.tapcat.net:/home/tapcat/war/
-  - ssh -p 222 -i id_rsa tapcat@api.tapcat.net './deploy.zsh tapcat-webserver'
+# scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.jar tapcat@somehost.net:/home/tapcat/
+  - scp -P 222 -i id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.jar tapcat@api.tapcat.net:~/war/
+  - ssh -p 222 -i id_rsa tapcat@api.tapcat.net 'nohup ./deploy.zsh tapcat-webserver &'

@@ -21,13 +21,11 @@
         </encoder>
     </appender>
 
-    <logger name="net.tapcat">
-        <level value="INFO" />
+    <logger name="net.tapcat" level="debug" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
 
-    <root>
-        <level value="WARN" />
+    <root level="WARN">
         <appender-ref ref="FILE" />
         <appender-ref ref="CONSOLE" />
     </root>

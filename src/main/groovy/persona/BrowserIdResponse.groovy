@@ -5,7 +5,9 @@ import groovy.transform.ToString
 
 @EqualsAndHashCode
 @ToString(includes = ['email'])
-class BrowserIdResponse {
+class BrowserIdResponse implements Serializable {
+
+    private static final long serialVersionUID = 1
 
     String status
     String email

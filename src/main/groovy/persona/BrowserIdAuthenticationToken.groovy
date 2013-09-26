@@ -50,7 +50,7 @@ class BrowserIdAuthenticationToken extends AbstractAuthenticationToken implement
         super(authorities)
         this.auth = auth
         this.assertion = assertion
-        setAuthenticated(auth != null && auth.getStatus() == BrowserIdResponse.BrowserIdResponseStatus.OK)
+        setAuthenticated(auth != null && auth.getStatus().equalsIgnoreCase('ok'))
         setDetails(auth)
     }
 

@@ -2,6 +2,7 @@ package persona
 import groovy.util.logging.Slf4j
 import org.json.JSONException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpMethod
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
@@ -15,18 +16,12 @@ import javax.servlet.http.HttpServletResponse
 @Slf4j
 class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter {
 
-    private static final String DEFAULT_ASSERTION_PARAMETER = 'assertion'
-
-    private String assertionParameterName = DEFAULT_ASSERTION_PARAMETER
+    private String assertionParameterName = 'assertion'
 
     private BrowserIdVerifier verifier
 
     public BrowserIdProcessingFilter(String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl)
-    }
-
-    public String getAssertionParameterName() {
-        return assertionParameterName
     }
 
     /**
@@ -35,23 +30,26 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
         String browserIdAssertion = request.getParameter(getAssertionParameterName())
-        if(!browserIdAssertion) {
+        if(!browserIdAssertion || !HttpMethod.POST.name().equals(request.getMethod())) {
             throw new BrowserIdAuthenticationException('Authentication request should contain assertion')
         }
-        String audience  = request.getRequestURL().toString()
+        String audience = resolveAudience(request)
+        authenticate(browserIdAssertion, audience)
+    }
 
+    private static String resolveAudience(HttpServletRequest request) {
+        String audience = request.getRequestURL().toString()
         try {
             URL url = new URL(audience)
-            audience = url.getHost()
-            tryAuthenticate(browserIdAssertion, audience)
+            "${url.getHost()}:${url.getPort()}"
         } catch (IOException | JSONException e) {
-            throw new BrowserIdAuthenticationException("Error calling verify service with audience ${audience}", e)
+            throw new BrowserIdAuthenticationException("Error calling verify service with audience ${audience} ", e)
         }
     }
 
-    private Authentication tryAuthenticate(String browserIdAssertion, String audience) {
+    private Authentication authenticate(String browserIdAssertion, String audience) {
         BrowserIdResponse response = verifier.verify(browserIdAssertion, audience)
-        if(response.getStatus() != BrowserIdResponse.BrowserIdResponseStatus.OK){
+        if(!response.getStatus().equalsIgnoreCase('ok')){
             throw new BrowserIdAuthenticationException('BrowserID verification failed, reason: ' + response.getReason())
         }
         BrowserIdAuthenticationToken token = new BrowserIdAuthenticationToken(response, browserIdAssertion)
@@ -83,6 +81,10 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
      */
     public void setAssertionParameterName(String assertionParameterName) {
         this.assertionParameterName = assertionParameterName
+    }
+
+    public String getAssertionParameterName() {
+        return assertionParameterName
     }
 
 }

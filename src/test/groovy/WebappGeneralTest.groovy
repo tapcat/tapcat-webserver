@@ -35,7 +35,7 @@ class WebappGeneralTest extends Specification {
                 .andExpect(status().isForbidden())
     }
 
-    public void 'unauthorized request to user controller should be unauthorised'() {
+    public void 'unauthorized request to user controller should be forbidden'() {
         expect:
         mockMvc.perform(get("/user"))
                 .andExpect(status().isForbidden())

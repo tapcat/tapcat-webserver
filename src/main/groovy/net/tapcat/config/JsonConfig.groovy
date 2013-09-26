@@ -4,6 +4,7 @@ import org.codehaus.jackson.map.DeserializationConfig
 import org.codehaus.jackson.map.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter
 
 @Configuration
@@ -16,7 +17,7 @@ class JsonConfig {
     }
 
     @Bean
-    def httpMessageConverter(ObjectMapper mapper) {
+    HttpMessageConverter httpMessageConverter(ObjectMapper mapper) {
         def converter = new MappingJacksonHttpMessageConverter()
         converter.setObjectMapper(mapper)
 

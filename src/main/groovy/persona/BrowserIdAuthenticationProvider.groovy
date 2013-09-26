@@ -4,7 +4,7 @@ import org.springframework.beans.factory.InitializingBean
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetailsService
 
 @Slf4j
@@ -22,22 +22,16 @@ class BrowserIdAuthenticationProvider implements InitializingBean, Authenticatio
 
         BrowserIdResponse response = browserIdAuth.getVerificationResponse()
 
-        if(response.getStatus() == 'OK' ){
+        if(!response.getStatus().equalsIgnoreCase('OK') ) {
+            throw new BrowserIdAuthenticationException('User not verified: ' + response)
+        } else {
             String identity = response.getEmail()
-            GrantedAuthority[] grantedAuthorities = ['USER']
-            if(grantedAuthorities.length == 0) {
-                throw new BrowserIdAuthenticationException('No authorities granted to ' + identity)
-            }
+            def grantedAuthorities = [new SimpleGrantedAuthority('USER')]
 
             if(log.isDebugEnabled()) {
                 log.debug('Upgraded token with authorities')
             }
-            new BrowserIdAuthenticationToken(grantedAuthorities as
-                List, response, browserIdAuth.getAssertion())
-        }
-
-        else {
-            throw new BrowserIdAuthenticationException('User not verified: ' + response)
+            new BrowserIdAuthenticationToken(grantedAuthorities, response, browserIdAuth.getAssertion())
         }
     }
 

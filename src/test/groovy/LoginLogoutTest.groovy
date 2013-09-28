@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.client.RestOperations
 import org.springframework.web.context.WebApplicationContext
 import persona.BrowserIdProcessingFilter
-import persona.BrowserIdResponse
+import persona.BrowserIdAuthenticationResponse
 import persona.BrowserIdVerifier
 import spock.lang.Specification
 
@@ -53,9 +53,9 @@ class LoginLogoutTest  extends Specification {
 
     public void 'auth should be performed with persona verification request'() {
         given:
-        def httpClient = new MockFor(RestOperations)
-        httpClient.demand.postForObject(1) { url, data, mapTo -> assert url == 'persona-url';  new BrowserIdResponse(status: 'ok') }
-        authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', httpClient.proxyInstance())
+        def restOp = new MockFor(RestOperations)
+        restOp.demand.postForObject(1) { url, data, mapTo -> assert url == 'persona-url';  new BrowserIdAuthenticationResponse(status: 'ok') }
+        authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
         expect:
         mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())

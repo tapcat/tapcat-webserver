@@ -25,9 +25,9 @@ class BrowserIdVerifier  {
      * @param audience
      * @return auth response
      */
-    public BrowserIdResponse verify(String assertion, String audience) {
+    public BrowserIdAuthenticationResponse verify(String assertion, String audience) {
         //TODO: check certificate?
-        restOperations.postForObject(url, [assertion: assertion, audience: audience], BrowserIdResponse)
+        restOperations.postForObject(url, [assertion: assertion, audience: audience], BrowserIdAuthenticationResponse)
     }
 
 }

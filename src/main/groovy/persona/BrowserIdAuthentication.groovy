@@ -1,24 +1,50 @@
 package persona
 
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.GrantedAuthority
 
-public interface BrowserIdAuthentication extends Authentication {
+class BrowserIdAuthentication implements Authentication {
 
-    /**
-     *
-     * @return Domain and optionally port for which the assertion is intended
-     */
-    String getAudience()
-    /**
-     *
-     * @return Encoded JWT identity assertion.
-     */
-    String getAssertion()
+    private static final long serialVersionUID = 1L
 
-    /**
-     *
-     * @return Verification response (if made), <code>null</code> otherwise
-     */
-    BrowserIdResponse getVerificationResponse()
+    private BrowserIdAuthenticationResponse auth
 
+    private long expires
+
+    Collection<? extends GrantedAuthority> authorities
+
+    boolean authenticated = true
+
+    public BrowserIdAuthentication(Collection<? extends GrantedAuthority> authorities,
+                                   BrowserIdAuthenticationToken authToken) {
+        this.auth = (BrowserIdAuthenticationResponse) authToken.details
+        this.authorities = authorities
+    }
+
+
+    public int getExpriationTime() { auth.expires }
+
+    @Override
+    public Object getPrincipal() { auth.email }
+
+    @Override
+    public Object getCredentials() { auth.audience }
+
+    @Override
+    Object getDetails() { auth }
+
+    @Override
+    boolean isAuthenticated() { authenticated }
+
+    @Override
+    void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+        authenticated = isAuthenticated
+    }
+
+    @Override
+    String getName() { auth.email }
+
+    public String toString() {
+        "Expiration: ${auth.expires}"
+    }
 }

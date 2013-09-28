@@ -48,11 +48,11 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
     }
 
     private Authentication authenticate(String browserIdAssertion, String audience) {
-        BrowserIdResponse response = verifier.verify(browserIdAssertion, audience)
-        if(!response.getStatus().equalsIgnoreCase('ok')){
+        BrowserIdAuthenticationResponse response = verifier.verify(browserIdAssertion, audience)
+        if(!response.getStatus().equalsIgnoreCase('ok')) {
             throw new BrowserIdAuthenticationException('BrowserID verification failed, reason: ' + response.getReason())
         }
-        BrowserIdAuthenticationToken token = new BrowserIdAuthenticationToken(response, browserIdAssertion)
+        BrowserIdAuthenticationToken token = new BrowserIdAuthenticationToken(response)
         getAuthenticationManager().authenticate(token)
     }
 

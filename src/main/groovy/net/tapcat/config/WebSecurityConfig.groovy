@@ -37,7 +37,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AbstractAuthenticationProcessingFilter authFilter() {
         def filter = new BrowserIdProcessingFilter('/login')
-        filter.verifier = personaVerifier()
         filter.setAuthenticationManager(authenticationManagerBean())
         filter
     }

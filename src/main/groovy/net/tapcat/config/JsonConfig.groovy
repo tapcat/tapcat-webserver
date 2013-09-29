@@ -20,6 +20,6 @@ class JsonConfig {
     HttpMessageConverter httpMessageConverter(ObjectMapper mapper) {
         def converter = new MappingJacksonHttpMessageConverter()
         converter.setObjectMapper(mapper)
-
+        converter
     }
 }

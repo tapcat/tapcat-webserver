@@ -11,22 +11,22 @@ class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return [WebSecurityConfig.class, JsonConfig.class ];
+        return [JsonConfig, WebSecurityConfig];
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return [WebConfig.class, WebSocketConfig.class];
+        return [WebConfig, WebSocketConfig];
     }
 
     @Override
     protected String[] getServletMappings() {
-        return ["/"];
+        return ['/'];
     }
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setInitParameter("dispatchOptionsRequest", "true");
+        registration.setInitParameter('dispatchOptionsRequest', 'true');
     }
 
     @Override

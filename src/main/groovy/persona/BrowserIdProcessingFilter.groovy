@@ -18,7 +18,8 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
 
     private String assertionParameterName = 'assertion'
 
-    private BrowserIdVerifier verifier
+    @Autowired
+    BrowserIdVerifier verifier
 
     public BrowserIdProcessingFilter(String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl)
@@ -29,7 +30,8 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
-        String browserIdAssertion = request.getParameter(getAssertionParameterName())
+        String browserIdAssertion = request.getParameter(assertionParameterName)
+
         if(!browserIdAssertion || !HttpMethod.POST.name().equals(request.getMethod())) {
             throw new BrowserIdAuthenticationException('Authentication request should contain assertion')
         }
@@ -50,7 +52,7 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
     private Authentication authenticate(String browserIdAssertion, String audience) {
         BrowserIdAuthenticationResponse response = verifier.verify(browserIdAssertion, audience)
         if(!response.getStatus().equalsIgnoreCase('ok')) {
-            throw new BrowserIdAuthenticationException('BrowserID verification failed, reason: ' + response.getReason())
+            throw new BrowserIdAuthenticationException('BrowserID verification failed, reason: ' + response.reason)
         }
         BrowserIdAuthenticationToken token = new BrowserIdAuthenticationToken(response)
         getAuthenticationManager().authenticate(token)
@@ -68,11 +70,6 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
         if (authResult instanceof BrowserIdAuthenticationToken && log.isDebugEnabled()) {
             log.debug(authResult.principal.toString())
         }
-    }
-
-    @Autowired
-    void setVerifier(BrowserIdVerifier verifier) {
-        this.verifier = verifier
     }
 
     /**

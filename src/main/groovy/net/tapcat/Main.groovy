@@ -5,6 +5,8 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration
 import org.eclipse.jetty.annotations.ClassInheritanceHandler
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.session.HashSessionIdManager
+import org.eclipse.jetty.server.session.HashSessionManager
+import org.eclipse.jetty.server.session.SessionHandler
 import org.eclipse.jetty.util.MultiMap
 import org.eclipse.jetty.webapp.Configuration
 import org.eclipse.jetty.webapp.WebAppContext
@@ -22,13 +24,17 @@ class Main {
         def server = new Server(port);
 
         def webAppContext = new WebAppContext()
-        webAppContext.setConfigurations([annotationConfig] as Configuration[])
-        webAppContext.setContextPath('/')
-        //webAppContext.setParentLoaderPriority(false)
+        webAppContext.configurations = [annotationConfig] as Configuration[]
+        webAppContext.contextPath = '/'
+        webAppContext.sessionHandler = new SessionHandler()
 
-        def sessionStorage = new HashSessionIdManager()
+        def sessionManager = new HashSessionManager()
+        sessionManager.savePeriod = 60000 // ms. Persist to disk interval
+        sessionManager.lazyLoad = true
+        sessionManager.storeDirectory = new File('sessions')
+        sessionManager.setSessionIdManager(new HashSessionIdManager())
 
-        server.addBean(sessionStorage)
+        webAppContext.addBean(sessionManager)
         server.setHandler(webAppContext)
         server.start()
         server.join()

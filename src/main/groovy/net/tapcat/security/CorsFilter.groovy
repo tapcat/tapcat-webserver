@@ -13,7 +13,7 @@ class CorsFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.setHeader('Access-Control-Allow-Origin', '//localhost')
+        response.setHeader('Access-Control-Allow-Origin', 'http://localhost:9000')
         filterChain.doFilter(request, response)
     }
 }

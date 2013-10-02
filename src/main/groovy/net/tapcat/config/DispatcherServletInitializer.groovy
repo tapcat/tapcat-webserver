@@ -1,36 +1,42 @@
 package net.tapcat.config
 
+import net.tapcat.security.CorsFilter
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
 
+import javax.servlet.Filter
 import javax.servlet.ServletContext
 import javax.servlet.ServletException
 import javax.servlet.ServletRegistration
 
 class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+    @Override
+    protected Filter[] getServletFilters() {
+        new CorsFilter()
+    }
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return [JsonConfig, WebSecurityConfig];
+        [RestConfig, WebSecurityConfig]
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return [WebConfig, WebSocketConfig];
+        [WebConfig, WebSocketConfig]
     }
 
     @Override
     protected String[] getServletMappings() {
-        return ['/'];
+        ['/']
     }
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setInitParameter('dispatchOptionsRequest', 'true');
+        registration.setInitParameter('dispatchOptionsRequest', 'true')
     }
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext);
+        super.onStartup(servletContext)
     }
 }

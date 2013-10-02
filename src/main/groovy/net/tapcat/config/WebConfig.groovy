@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = ['net.tapcat.advert'])
+@ComponentScan(basePackages = ['net.tapcat.advert', 'net.tapcat.monitoring'])
 class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override

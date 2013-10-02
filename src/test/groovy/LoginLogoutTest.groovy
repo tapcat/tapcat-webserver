@@ -1,5 +1,5 @@
 import groovy.mock.interceptor.MockFor
-import net.tapcat.config.JsonConfig
+import net.tapcat.config.RestConfig
 import net.tapcat.config.WebConfig
 import net.tapcat.config.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebAppConfiguration
-@ContextConfiguration(classes = [JsonConfig, WebSecurityConfig, WebConfig])
+@ContextConfiguration(classes = [RestConfig, WebSecurityConfig, WebConfig])
 class LoginLogoutTest  extends Specification {
 
     @Autowired

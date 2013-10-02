@@ -7,14 +7,13 @@ import org.springframework.web.client.RestOperations
 @Component
 class BrowserIdVerifier  {
 
-    private static String DEFAULT_VERIFY_URL = 'https://login.persona.org/verify'
-
-    private String url = DEFAULT_VERIFY_URL
+    private String url
 
     @Autowired
     RestOperations restOperations
 
-    BrowserIdVerifier(String url, RestOperations restOperations = null) {
+    BrowserIdVerifier(String url = 'https://verifier.login.persona.org/verify',
+                      RestOperations restOperations = null) {
         this.url = url
         this.restOperations = restOperations
     }

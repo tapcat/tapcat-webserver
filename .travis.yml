@@ -14,4 +14,4 @@ after_success:
   - chmod 600 id_rsa
 # scp copy -> scp -i ./id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.jar tapcat@somehost.net:/home/tapcat/
   - scp -P 222 -i id_rsa -o StrictHostKeyChecking=no target/tapcat-webserver.jar tapcat@api.tapcat.net:~/war/
-  - ssh -p 222 -i id_rsa tapcat@api.tapcat.net 'nohup ./deploy.zsh tapcat-webserver &'
+  - ssh -p 222 -i id_rsa tapcat@api.tapcat.net 'nohup ./deploy.zsh tapcat-webserver > deploy.out 2> deploy.err < /dev/null &'

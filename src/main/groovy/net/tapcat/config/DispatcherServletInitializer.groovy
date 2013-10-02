@@ -1,6 +1,5 @@
 package net.tapcat.config
 
-import net.tapcat.security.CorsFilter
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
 
 import javax.servlet.Filter
@@ -12,7 +11,7 @@ class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Filter[] getServletFilters() {
-        new CorsFilter()
+       //
     }
 
     @Override

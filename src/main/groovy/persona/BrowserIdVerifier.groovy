@@ -32,8 +32,17 @@ class BrowserIdVerifier  {
 
     private static String resolveAudience(String requestUrl) {
         try {
-            URL url = new URL(requestUrl)
-            "${url.getHost()}:${url.getPort()}"
+            if(!requestUrl.startsWith("http") && !requestUrl.startsWith("https")){
+                requestUrl = "http://" + requestUrl;
+            }
+            URI url = new URI(requestUrl)
+            def host =  url.host.startsWith("www.") ? url.host.substring(4) : url.host
+
+            if (url.port > 0 && url.port != 80) {
+                "${host}:${url.port}"
+            } else {
+                host
+            }
         } catch (IOException | JSONException e) {
             throw new BrowserIdAuthenticationException("Error calling verify service for URL: ${requestUrl} ", e)
         }

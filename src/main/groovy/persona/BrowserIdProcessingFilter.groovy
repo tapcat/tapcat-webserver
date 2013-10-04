@@ -34,7 +34,9 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
         if(!browserIdAssertion || !HttpMethod.POST.name().equals(request.getMethod())) {
             throw new BrowserIdAuthenticationException('Authentication request should contain assertion')
         }
-        authenticate(browserIdAssertion, request.getRequestURL().toString())
+        def requestUrl = request.getHeader('Host')?: request.getRequestURL() // proxy pass will rewrite request url.
+        // can restore it from Host header
+        authenticate(browserIdAssertion, requestUrl)
     }
 
     private Authentication authenticate(String browserIdAssertion, String requestUrl) {

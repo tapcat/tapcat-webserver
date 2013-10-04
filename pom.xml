@@ -283,7 +283,7 @@
                         <goals>
                             <goal>generateStubs</goal>
                             <goal>compile</goal>
-                            <!--<goal>generateTestStubs</goal>-->
+                            <goal>generateTestStubs</goal>
                             <goal>testCompile</goal>
                         </goals>
                     </execution>

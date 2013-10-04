@@ -1,6 +1,5 @@
 package persona
 import groovy.util.logging.Slf4j
-import org.json.JSONException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.security.core.Authentication
@@ -35,22 +34,11 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
         if(!browserIdAssertion || !HttpMethod.POST.name().equals(request.getMethod())) {
             throw new BrowserIdAuthenticationException('Authentication request should contain assertion')
         }
-        String audience = resolveAudience(request)
-        authenticate(browserIdAssertion, audience)
+        authenticate(browserIdAssertion, request.getRequestURL().toString())
     }
 
-    private static String resolveAudience(HttpServletRequest request) {
-        String audience = request.getRequestURL().toString()
-        try {
-            URL url = new URL(audience)
-            "${url.getHost()}:${url.getPort()}"
-        } catch (IOException | JSONException e) {
-            throw new BrowserIdAuthenticationException("Error calling verify service with audience ${audience} ", e)
-        }
-    }
-
-    private Authentication authenticate(String browserIdAssertion, String audience) {
-        BrowserIdAuthenticationResponse response = verifier.verify(browserIdAssertion, audience)
+    private Authentication authenticate(String browserIdAssertion, String requestUrl) {
+        BrowserIdAuthenticationResponse response = verifier.verify(browserIdAssertion, requestUrl)
         if(!response.getStatus().equalsIgnoreCase('ok')) {
             throw new BrowserIdAuthenticationException('BrowserID verification failed, reason: ' + response.reason)
         }

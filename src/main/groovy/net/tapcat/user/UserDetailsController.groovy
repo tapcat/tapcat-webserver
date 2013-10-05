@@ -1,4 +1,4 @@
-package net.tapcat.details
+package net.tapcat.user
 import org.springframework.security.access.annotation.Secured
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller

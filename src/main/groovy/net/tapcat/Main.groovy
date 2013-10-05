@@ -35,6 +35,7 @@ class Main {
         sessionManager.storeDirectory = new File('sessions')
         sessionManager.setSessionIdManager(new HashSessionIdManager())
         sessionManager.httpOnly = true
+        sessionManager.scavengePeriod = 60000 //ms
 
         webAppContext.addBean(sessionManager)
         server.setHandler(webAppContext)

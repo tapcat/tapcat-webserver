@@ -16,7 +16,7 @@ class BrowserIdAuthenticationToken extends AbstractAuthenticationToken {
     public BrowserIdAuthenticationToken(BrowserIdAuthenticationResponse auth) {
         super(null) // none authorities can be set up in token
         this.auth = auth
-        setAuthenticated(auth.getStatus().equalsIgnoreCase('ok'))
+        setAuthenticated(true)
         setDetails(auth)
     }
 

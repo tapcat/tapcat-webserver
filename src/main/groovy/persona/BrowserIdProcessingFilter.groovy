@@ -41,7 +41,7 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
 
     private Authentication authenticate(String browserIdAssertion, String requestUrl) {
         BrowserIdAuthenticationResponse response = verifier.verify(browserIdAssertion, requestUrl)
-        if(!response.getStatus().equalsIgnoreCase('ok')) {
+        if(!response.getStatus().startsWith('ok')) {
             throw new BrowserIdAuthenticationException('BrowserID verification failed, reason: ' + response)
         }
         BrowserIdAuthenticationToken token = new BrowserIdAuthenticationToken(response)

@@ -14,7 +14,7 @@ class TopDomainAudienceResolver implements AudienceResolver {
     @Override
     String resolve(String url) throws AudienceResolveException {
         def audience = internalResolver.resolve(url)
-        def indexOfLastDot = audience.lastIndexOf('.')
-        indexOfLastDot > 0 ? audience.substring(audience.lastIndexOf('.')) : audience
+        def audienceParts = audience.split('\\.')
+        audienceParts.length >= 2 ? audienceParts[-2..-1].join('.') : audience
     }
 }

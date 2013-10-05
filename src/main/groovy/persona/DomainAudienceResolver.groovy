@@ -3,7 +3,11 @@ package persona
 import org.json.JSONException
 
 /**
- * If you see it, than I've forgotten javadoc
+ * Default audience resolver
+ * Extracts host and port from url
+ * Example:
+ *  http://tapcat.net -> tapcat.net
+ *  tapcat.net:8080 -> tapcat.net:8080
  *
  * @author Denis Golovachev
  * @author $Author$ (current maintainer)

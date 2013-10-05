@@ -34,6 +34,7 @@ class Main {
         sessionManager.lazyLoad = true
         sessionManager.storeDirectory = new File('sessions')
         sessionManager.setSessionIdManager(new HashSessionIdManager())
+        sessionManager.httpOnly = true
 
         webAppContext.addBean(sessionManager)
         server.setHandler(webAppContext)

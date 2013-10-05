@@ -61,4 +61,15 @@ class LoginLogoutTest  extends Specification {
                 .andExpect(status().isOk())
     }
 
+    public void 'auth should be performed when Persona answers with "OKAY"'() {
+        given:
+        def restOp = new MockFor(RestOperations)
+        restOp.demand.postForObject(1) { url, data, mapTo -> assert url == 'persona-url';  new
+                                            BrowserIdAuthenticationResponse(status: 'okay') }
+        authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
+        expect:
+        mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+    }
+
 }

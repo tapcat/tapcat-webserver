@@ -58,6 +58,7 @@ class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter 
         if (authResult instanceof BrowserIdAuthenticationToken && log.isDebugEnabled()) {
             log.debug(authResult.principal.toString())
         }
+        super.successfulAuthentication(request, response, chain, authResult)
     }
 
     /**

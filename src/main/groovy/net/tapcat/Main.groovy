@@ -4,7 +4,6 @@ import net.tapcat.config.WebSecurityInitializer
 import org.eclipse.jetty.annotations.AnnotationConfiguration
 import org.eclipse.jetty.annotations.ClassInheritanceHandler
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.server.session.HashSessionIdManager
 import org.eclipse.jetty.server.session.HashSessionManager
 import org.eclipse.jetty.server.session.SessionHandler
 import org.eclipse.jetty.util.MultiMap
@@ -33,11 +32,10 @@ class Main {
         sessionManager.savePeriod = 60000 // ms. Persist to disk interval
         sessionManager.lazyLoad = true
         sessionManager.storeDirectory = new File('sessions')
-        sessionManager.setSessionIdManager(new HashSessionIdManager())
         sessionManager.httpOnly = true
         sessionManager.scavengePeriod = 60000 //ms
+        webAppContext.sessionHandler.sessionManager = sessionManager
 
-        webAppContext.addBean(sessionManager)
         server.setHandler(webAppContext)
         server.start()
         server.join()

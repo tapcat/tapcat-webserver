@@ -58,7 +58,7 @@ class LoginLogoutTest  extends Specification {
         authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
         expect:
         mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
+                .andExpect(status().isFound())
     }
 
     public void 'auth should be performed when Persona answers with "OKAY"'() {
@@ -69,7 +69,7 @@ class LoginLogoutTest  extends Specification {
         authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
         expect:
         mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
+                .andExpect(status().isFound())
     }
 
 }

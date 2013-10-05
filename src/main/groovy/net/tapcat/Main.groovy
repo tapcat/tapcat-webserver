@@ -1,7 +1,6 @@
 package net.tapcat
 import net.tapcat.config.DispatcherServletInitializer
 import net.tapcat.config.WebSecurityInitializer
-import net.tapcat.security.CorsFilter
 import org.eclipse.jetty.annotations.AnnotationConfiguration
 import org.eclipse.jetty.annotations.ClassInheritanceHandler
 import org.eclipse.jetty.server.Server
@@ -12,8 +11,6 @@ import org.eclipse.jetty.util.MultiMap
 import org.eclipse.jetty.webapp.Configuration
 import org.eclipse.jetty.webapp.WebAppContext
 import org.springframework.web.WebApplicationInitializer
-
-import javax.servlet.DispatcherType
 
 class Main {
 
@@ -27,10 +24,6 @@ class Main {
         def server = new Server(port);
 
         def webAppContext = new WebAppContext()
-
-        def filter = webAppContext.getServletContext().addFilter('Cors Filter', CorsFilter)
-        filter.asyncSupported = true
-        filter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR), false, '/*')
 
         webAppContext.configurations = [annotationConfig] as Configuration[]
         webAppContext.contextPath = '/'

@@ -4,7 +4,7 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
 @EqualsAndHashCode
-@ToString(includes = ['email'])
+@ToString(includes = ['status', 'email', 'reason'])
 class BrowserIdAuthenticationResponse {
 
     private static final long serialVersionUID = 1

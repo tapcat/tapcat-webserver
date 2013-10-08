@@ -1,6 +1,5 @@
 package net.tapcat.config
-import net.tapcat.security.ResponseCodeOnlyAuthHandler
-import net.tapcat.security.ResponseCodeOnlyLogoutHandler
+
 import net.tapcat.security.TopDomainAudienceResolver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -42,9 +41,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BrowserIdVerifier personaVerifier() {
-        new BrowserIdVerifier(audienceResolver: new TopDomainAudienceResolver())
-    }
+    public BrowserIdVerifier personaVerifier() { new BrowserIdVerifier() }
 
     @Override
     protected void registerAuthentication(AuthenticationManagerBuilder auth)

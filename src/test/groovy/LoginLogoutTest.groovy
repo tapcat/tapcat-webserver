@@ -39,16 +39,16 @@ class LoginLogoutTest  extends Specification {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).addFilters(springSecurityFilterChain).build()
     }
 
-    public void 'empty request to login entry point should explain Auth error and return Unauthorized'() {
+    public void 'empty request to login entry point should be forbidden'() {
         expect:
         mockMvc.perform(get("/login"))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
     }
 
     public void 'unauthorized request to logout entry point should be redirected'() {
         expect:
         mockMvc.perform(get("/logout"))
-                .andExpect(status().isFound())
+                .andExpect(status().isNoContent())
     }
 
     public void 'auth should be performed with persona verification request'() {
@@ -58,7 +58,7 @@ class LoginLogoutTest  extends Specification {
         authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
         expect:
         mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isFound())
+                .andExpect(status().isNoContent())
     }
 
     public void 'auth should be performed when Persona answers with "OKAY"'() {
@@ -69,7 +69,7 @@ class LoginLogoutTest  extends Specification {
         authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
         expect:
         mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isFound())
+                .andExpect(status().isNoContent())
     }
 
 }

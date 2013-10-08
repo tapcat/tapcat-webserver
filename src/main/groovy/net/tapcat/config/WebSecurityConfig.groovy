@@ -1,5 +1,6 @@
 package net.tapcat.config
-
+import net.tapcat.security.ResponseCodeOnlyAuthHandler
+import net.tapcat.security.ResponseCodeOnlyLogoutHandler
 import net.tapcat.security.TopDomainAudienceResolver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -29,21 +30,20 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers('/monitoring/**').permitAll()
                 .anyRequest().hasAuthority('USER')
                 .and()
-                .logout().logoutUrl('/logout').logoutSuccessUrl('/')
+                .logout().logoutUrl('/logout').logoutSuccessHandler(new ResponseCodeOnlyLogoutHandler())
     }
 
     @Bean
     public AbstractAuthenticationProcessingFilter authFilter() {
         def filter = new BrowserIdProcessingFilter('/login')
-        filter.setAuthenticationManager(authenticationManagerBean())
+        filter.authenticationManager = authenticationManagerBean()
+        filter.authenticationFailureHandler = filter.authenticationSuccessHandler = new ResponseCodeOnlyAuthHandler()
         filter
     }
 
     @Bean
     public BrowserIdVerifier personaVerifier() {
-        def verifier = new BrowserIdVerifier()
-        verifier.audienceResolver = new TopDomainAudienceResolver()
-        verifier
+        new BrowserIdVerifier(audienceResolver: new TopDomainAudienceResolver())
     }
 
     @Override

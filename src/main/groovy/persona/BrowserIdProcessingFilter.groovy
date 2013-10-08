@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Slf4j
-class BrowserIdProcessingFilter  extends AbstractAuthenticationProcessingFilter {
+class BrowserIdProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
     private String assertionParameterName = 'assertion'
 

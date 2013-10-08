@@ -14,7 +14,7 @@ class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        [WebConfig, WebSocketConfig]
+        [WebConfig]
     }
 
     @Override

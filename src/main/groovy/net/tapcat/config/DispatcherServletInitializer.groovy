@@ -1,18 +1,11 @@
 package net.tapcat.config
-
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
 
-import javax.servlet.Filter
 import javax.servlet.ServletContext
 import javax.servlet.ServletException
 import javax.servlet.ServletRegistration
 
 class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-    @Override
-    protected Filter[] getServletFilters() {
-       //
-    }
 
     @Override
     protected Class<?>[] getRootConfigClasses() {

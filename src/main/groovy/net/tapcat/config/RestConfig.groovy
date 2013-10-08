@@ -24,9 +24,7 @@ class RestConfig {
 
     @Bean
     HttpMessageConverter httpMessageConverter(ObjectMapper mapper) {
-        def converter = new MappingJackson2HttpMessageConverter()
-        converter.setObjectMapper(mapper)
-        converter
+        new MappingJackson2HttpMessageConverter(objectMapper: mapper)
     }
 
     @Bean

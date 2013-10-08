@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse
 
 class ResponseCodeOnlyAuthHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler {
 
-    int success = 204
-    int failure = 403
+    int success = HttpServletResponse.SC_NO_CONTENT
+    int failure = HttpServletResponse.SC_UNAUTHORIZED
 
     @Override
     void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -21,6 +21,6 @@ class ResponseCodeOnlyAuthHandler implements AuthenticationSuccessHandler, Authe
 
     @Override
     void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        response.setStatus(failure)
+        response.sendError(failure, "Authentication Failed: " + exception.getMessage());
     }
 }

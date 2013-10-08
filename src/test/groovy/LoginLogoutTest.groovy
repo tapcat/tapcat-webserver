@@ -42,7 +42,7 @@ class LoginLogoutTest  extends Specification {
     public void 'empty request to login entry point should be forbidden'() {
         expect:
         mockMvc.perform(get("/login"))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
     }
 
     public void 'unauthorized request to logout entry point should be redirected'() {

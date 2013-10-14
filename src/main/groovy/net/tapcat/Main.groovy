@@ -32,7 +32,6 @@ class Main {
         sessionManager.savePeriod = 60000 // ms. Persist to disk interval
         sessionManager.lazyLoad = true
         sessionManager.storeDirectory = new File('sessions')
-        sessionManager.httpOnly = true
         sessionManager.scavengePeriod = 60000 //ms
         webAppContext.sessionHandler.sessionManager = sessionManager
 

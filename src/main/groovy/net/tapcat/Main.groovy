@@ -30,6 +30,7 @@ class Main {
 
         def sessionManager = new HashSessionManager()
         sessionManager.savePeriod = 60000 // ms. Persist to disk interval
+        sessionManager.httpOnly = true
         sessionManager.lazyLoad = true
         sessionManager.storeDirectory = new File('sessions')
         sessionManager.scavengePeriod = 60000 //ms

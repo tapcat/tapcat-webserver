@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping('/user')
 class UserDetailsController {
 
-    @RequestMapping(value = '/', method = RequestMethod.GET)
+    @RequestMapping(value = '', method = RequestMethod.GET)
     @Secured('ROLE_USER')
     def details(Authentication auth) {
         [name: auth.principal]

@@ -1,4 +1,5 @@
 package net.tapcat
+
 import net.tapcat.config.DispatcherServletInitializer
 import net.tapcat.config.WebSecurityInitializer
 import org.eclipse.jetty.annotations.AnnotationConfiguration

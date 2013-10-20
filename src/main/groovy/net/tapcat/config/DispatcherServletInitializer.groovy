@@ -1,4 +1,5 @@
 package net.tapcat.config
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
 
 import javax.servlet.ServletContext
@@ -14,7 +15,7 @@ class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        [WebConfig]
+        [WebConfig, MetricsConfig]
     }
 
     @Override

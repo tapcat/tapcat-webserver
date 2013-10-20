@@ -28,7 +28,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterAfter(browserIdFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeUrls()
-                .antMatchers('/monitoring/**').permitAll()
+                .antMatchers('/monitoring/**', '/metrics/**').permitAll()
                 .anyRequest().hasAuthority('USER')
                 .and()
                 .logout().logoutUrl('/logout').logoutSuccessHandler(new ResponseCodeOnlyLogoutHandler())

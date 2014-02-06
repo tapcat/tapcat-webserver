@@ -27,7 +27,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .addFilterAfter(browserIdFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeUrls()
+                .authorizeRequests()
                 .antMatchers('/monitoring/**', '/metrics/**').permitAll()
                 .anyRequest().hasAuthority('USER')
                 .and()
@@ -48,7 +48,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void registerAuthentication(AuthenticationManagerBuilder auth)
+    protected void configure(AuthenticationManagerBuilder auth)
     throws Exception {
         auth.authenticationProvider(new BrowserIdAuthenticationProvider())
     }

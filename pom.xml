@@ -286,25 +286,6 @@
 
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-			<url>http://repo.springsource.org/snapshot</url>
-			<snapshots><enabled>true</enabled></snapshots>
-			<releases><enabled>false</enabled></releases>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<url>http://repo.springsource.org/libs-milestone</url>
-			<snapshots><enabled>false</enabled></snapshots>
-			<releases><enabled>true</enabled></releases>
-		</repository>
-		<repository>
-			<id>java-net</id>
-			<url>https://maven.java.net/content/repositories/releases</url>
-		</repository>
-	</repositories>
-
 	<build>
         <sourceDirectory>src/main/groovy</sourceDirectory>
         <testSourceDirectory>src/main/groovy</testSourceDirectory>

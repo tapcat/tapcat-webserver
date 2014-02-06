@@ -8,7 +8,7 @@
 
 	<properties>
 		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
-		<org.springframework.security-version>3.2.0.RC2</org.springframework.security-version>
+		<org.springframework.security-version>3.2.0.RELEASE</org.springframework.security-version>
         <jetty.version>9.1.0.M0</jetty.version>
         <metrics.version>3.0.1</metrics.version>
 	</properties>

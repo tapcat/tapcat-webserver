@@ -17,9 +17,9 @@ import persona.BrowserIdAuthenticationResponse
 import persona.BrowserIdVerifier
 import spock.lang.Specification
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebAppConfiguration
 @ContextConfiguration(classes = [RestConfig, WebSecurityConfig, WebConfig, MetricsConfig])
@@ -59,6 +59,7 @@ class LoginLogoutTest  extends Specification {
         authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
         expect:
         mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andDo(print())
                 .andExpect(status().isNoContent())
     }
 
@@ -70,6 +71,7 @@ class LoginLogoutTest  extends Specification {
         authenticationProcessingFilter.verifier = new BrowserIdVerifier('persona-url', restOp.proxyInstance())
         expect:
         mockMvc.perform(post("/login").param('assertion', '123').contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andDo(print())
                 .andExpect(status().isNoContent())
     }
 
